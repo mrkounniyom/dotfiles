@@ -28,12 +28,20 @@
 #
 
 from typing import List  # noqa: F401
-import subprocess, os, re
+import subprocess, os, re, sys, importlib
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+
+#config imports
+def reload(module):
+    if module in sys.modules:
+        importlib.reload(sys.modules[module])
+
+reload("keys")
 from keys import keys
+reload("screens")
 from screens import screens
 
 mod = "mod4"
@@ -54,17 +62,18 @@ colors = [
 #groups = [Group(i) for i in "123456789"]
 groups = [Group("1:DEV"),
           Group("2:WWW", matches=[Match(wm_class=["brave-browser", "Brave-Browser"])]),
-          Group("3:SYS"),
+          Group("3:OBS", matches=[Match(wm_class=["obs"])]),
           Group("4:FUN", matches=[Match(wm_class=["steam", "Steam"])]),
           Group("5:DOC"),
-          Group("6:CHAT"),
-          Group("7:MUS", matches=[Match(wm_class=["Spotify"])]),
+          Group("6:CHAT", matches=[Match(wm_class=["discord"])]),
+          Group("7:MUS", matches=[Match(wm_class=["Spotify", "spotify"])]),
           Group("8:VID"),
-          Group("9:EDIT", matches=[Match(wm_class=["emacs"])])]
+          Group("9:EDIT", matches=[Match(wm_class=["emacs", "geany"])])]
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
 
-
+margin_size=5
+single_size=3
 
 layouts = [
     #layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
@@ -74,19 +83,19 @@ layouts = [
     #layout.Bsp(),
     #layout.Matrix(),
     layout.MonadTall(
-        border_focus=colors[5],
-        margin=3,
-        single_margin=0,
+        border_focus=colors[4],
+        margin=margin_size,
+        single_margin=single_size,
                     ),
     #layout.MonadWide(),
     layout.RatioTile(
         border_focus=colors[5],
-        margin=3,
-        single_margin=0,
+        margin=margin_size,
+        single_margin=single_size,
                      ),
     layout.Tile(border_focus=colors[5],
-        margin=3,
-        single_margin=0,
+        margin=margin_size,
+        single_margin=single_size,
                 ),
     #layout.TreeTab(),
     #layout.VerticalTile(),
@@ -109,7 +118,7 @@ mouse = [
 ]
 
 dgroups_app_rules = []  # type: List
-follow_mouse_focus = True
+follow_mouse_focus = False
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(

@@ -36,6 +36,7 @@ keys = [
     #Monad
     Key([mod], "i", lazy.layout.grow()),
     Key([mod], "m", lazy.layout.shrink()),
+    Key([mod], "t", lazy.window.toggle_floating()),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
@@ -50,7 +51,6 @@ keys = [
             desc="Switch to next group"),
     Key([alt, "control"], "Left", lazy.screen.prev_group(),
             desc="Switch to previous group"),
-    Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "o", lazy.layout.maximize()),
 
     # Toggle between different layouts as defined below
@@ -63,9 +63,10 @@ keys = [
     #applications
     Key([mod], "r", lazy.spawn("rofi -show run"), desc="Spawn a command using a prompt widget"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "l", lazy.spawn("xflock4")),
-    Key([mod], "b", lazy.spawn("brave")),
-    Key([mod], "e", lazy.spawn("emacs")),
-    Key([mod], "s", lazy.spawn("steam")),
+    Key([mod], "l", lazy.spawn("xflock4"), desc="Launches XFLOCK4"),
+    Key([mod], "b", lazy.spawn("brave"), desc="Launch Brave Browser"),
+    Key([mod], "e", lazy.spawn("emacsclient -c -a emacs"), desc="Launch Emacs"),
+    Key([mod], "s", lazy.spawn("steam"), desc="Launch Steam"),
+    Key([mod], "p", lazy.spawn("flameshot gui"), desc="Launch Flameshot GUI"),
 
 ]
