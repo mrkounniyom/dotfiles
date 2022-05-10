@@ -1,28 +1,9 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+#  ___________________.___.____     ___________
+#  \_____  \__    ___/|   |    |    \_   _____/
+#   /  / \  \|    |   |   |    |     |    __)_
+#  /   \_/.  \    |   |   |    |___  |        \
+#  \_____\ \_/____|   |___|_______ \/_______  /
+#         \__>                    \/        \/
 #
 # http://docs.qtile.org/en/latest/index.html
 #
@@ -33,6 +14,8 @@ from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from qtheme import theme
+from keys import keys
 
 #config imports
 def reload(module):
@@ -41,78 +24,120 @@ def reload(module):
 
 reload("keys")
 from keys import keys
-reload("screens")
-from screens import screens
+#reload("screens")
+#from screens import screens
+reload("qtheme")
+from qtheme import theme
+
 
 mod = "mod4"
 alt = "mod1"
 terminal = "alacritty"
-
-colors = [
-    "#161320", #Black 0
-    "#D9E0EE", #White
-    "#DDB6F2", #Mauve
-    "#302D41", #Black 3
-    "#ABE9B3", #Green
-    "#F28FAD", #RED
-    "#96CDFB", #Blue
-]
+# Sets theming from qtheme
+colors = theme.Dracula
+# Image used in bar
+img = "~/.config/qtile/arch.png"
 
 
 #groups = [Group(i) for i in "123456789"]
-groups = [Group("1:DEV"),
-          Group("2:WWW", matches=[Match(wm_class=["brave-browser", "Brave-Browser"])]),
-          Group("3:OBS", matches=[Match(wm_class=["obs"])]),
-          Group("4:FUN", matches=[Match(wm_class=["steam", "Steam"])]),
-          Group("5:DOC"),
-          Group("6:CHAT", matches=[Match(wm_class=["discord"])]),
-          Group("7:MUS", matches=[Match(wm_class=["Spotify", "spotify"])]),
-          Group("8:VID"),
-          Group("9:EDIT", matches=[Match(wm_class=["emacs", "geany"])])]
-from libqtile.dgroups import simple_key_binder
-dgroups_key_binder = simple_key_binder("mod4")
+groups = [Group("➊:DEV"),
+          Group("➋:WWW", matches=[Match(wm_class=["brave-browser", "Brave-Browser"])]),
+          Group("➌:OBS", matches=[Match(wm_class=["obs"])]),
+          Group("➍:FUN", matches=[Match(wm_class=["steam", "Steam", "leagueclientux.exe"])]),
+          Group("➎:DOC"),
+          Group("➏:CHAT", matches=[Match(wm_class=["discord"])]),
+          Group("➐:MUS", matches=[Match(wm_class=["Spotify", "spotify", "deadbeef"])]),
+          Group("➑:VID"),
+          Group("➒:EMACS", matches=[Match(wm_class=["emacs"])]),
+          Group("⓵:GEANY", matches=[Match(wm_class=["geany"])]),
+          Group("⓶:FILES", matches=[Match(wm_class=["Thunar", "ranger"])]),
+          Group("⓷:VM", matches=[Match(wm_class=["virt-manager"])]),
+          Group("⓸:PWD", matches=[Match(wm_class=["bitwarden"])]),
+          Group("⓹:?"),
+          Group("⓺:?"),
+          Group("⓻:?"),
+          Group("⓼:?"),
+          Group("⓽:?"),
+
+          ]
+#from libqtile.dgroups import simple_key_binder
+#dgroups_key_binder = simple_key_binder("mod4")
+
+tempNum = 1
+#f = open("test.txt", "x")
+for group in groups:
+    #f.write(group.name)
+    #f.write(" " + str(tempNum) + " - ")
+    if tempNum < 10:
+        keys.extend(
+            [
+            Key(
+                [mod],
+                str(tempNum),
+                lazy.group[group.name].toscreen(),
+                desc="Switch to group {}".format(group.name),
+            ),
+            Key([mod, "shift"],
+                str(tempNum),
+                lazy.window.togroup(group.name),
+                desc="move window to group {}".format(group.name),
+            ),
+            ]
+            )
+    else:
+ #       break;
+        keys.extend(
+            [
+            Key(
+                [mod, alt],
+                str(tempNum-9),
+                lazy.group[group.name].toscreen(),
+                desc="Switch to group {}".format(group.name),
+            ),
+            Key([mod, alt, "shift"],
+                str(tempNum-9),
+                lazy.window.togroup(group.name),
+                desc="move window to group {}".format(group.name),
+            ),
+
+            ]
+        )
+
+    tempNum += 1
+#f.close()
 
 margin_size=5
 single_size=3
 
 layouts = [
-    #layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    #layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    #layout.Bsp(),
-    #layout.Matrix(),
     layout.MonadTall(
         border_focus=colors[4],
         margin=margin_size,
         single_margin=single_size,
                     ),
-    #layout.MonadWide(),
     layout.RatioTile(
-        border_focus=colors[5],
+        border_focus=colors[4],
         margin=margin_size,
         single_margin=single_size,
                      ),
-    layout.Tile(border_focus=colors[5],
+    layout.Tile(border_focus=colors[4],
         margin=margin_size,
         single_margin=single_size,
                 ),
-    #layout.TreeTab(),
-    #layout.VerticalTile(),
-    #layout.Zoomy(),
 ]
 
 widget_defaults = dict(
     font="mononoki Nerd Font",
     fontsize=12,
     padding=3,
+    background=colors[7]
 )
 extension_defaults = widget_defaults.copy()
 
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button1", start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
@@ -127,6 +152,155 @@ floating_layout = layout.Floating(
         *layout.Floating.default_float_rules,
     ]
 )
+
+#  __________
+#  \______   \_____ _______
+#   |    |  _/\__  \\_  __ \
+#   |    |   \ / __ \|  | \/
+#   |______  /(____  /__|
+#          \/      \/
+
+# Widget documentation -> see http://docs.qtile.org/en/latest/manual/ref/widgets.
+
+
+def sep():
+    return widget.Spacer(
+        length=1,
+    )
+
+def grox(fontsize):
+    return widget.GroupBox(
+					foreground=colors[2],
+                    background=colors[5],
+                    active=colors[0],
+                    inactive=colors[7],
+                    this_current_screen_border=colors[4],
+                    this_screen_border=colors[4],
+                    #Other Screen
+                    other_current_screen_border=colors[1],
+                    other_screen_border=colors[1],
+                    highlight_method='line',
+                    highlight_color=[colors[5]],
+                    use_mouse_wheel=False,
+                    hide_unused=True,
+                    disable_drag=True,
+                    fontsize=fontsize
+
+                )
+
+def _theme():
+    bleh = qtile.cmd_screens()
+    #screens[0].bar["top"].opacity = 0.25
+    f = open("text", "w")
+    f.write(str(bleh))
+    f.close()
+
+def barLeft():
+    return bar.Bar(
+            [
+
+                #widget.TextBox(text="X", foreground=colors[0], background=colors[6], fontsize=33,
+                #               mouse_callbacks={
+                #                   "Button1": _theme
+                #               }),
+                widget.Clock(foreground=colors[0], background=colors[6], format="%Y-%m-%d %a %I:%M %p"),
+                widget.TextBox(text=" ⏲", foreground=colors[0], background=colors[6], fontsize=18),
+                widget.Systray(foreground=colors[0], background=colors[6]),
+                widget.TextBox(text = "    ", padding = 0, foreground = colors[0], background=colors[6],
+                               mouse_callbacks = {'Button1': lazy.spawn('pavucontrol')},
+                               ),
+                widget.TextBox(text="\ue0b2", fontsize=60, padding=0, foreground=colors[7], background=colors[6]),
+                widget.WindowTabs(foreground=colors[5], fontsize=18),
+                widget.TextBox(text="\ue0b2", fontsize=60, padding=0, foreground=colors[5], background=colors[7]),
+                grox(14),
+                widget.TextBox(text="\ue0b2", fontsize=45, padding=0, foreground=colors[6], background=colors[5]),
+                widget.CurrentLayout(
+                    foreground=colors[0], background=colors[6],
+                ),
+                widget.TextBox(text="\ue0b2", fontsize=60, padding=0, foreground=colors[5], background=colors[6]),
+                widget.Spacer(length=1, background=colors[5]),
+                widget.Image(margin = 2, filename = img, scale = True, background=colors[5], mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun")}),
+                widget.Spacer(length=2, background=colors[5]),
+
+            ],
+            25,
+            background = colors[6],
+            margin=[1, 1, 1, 1], # Space around bar as int or list of ints [N E S W].
+            opacity = 1, # Bar Opacity
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        )
+
+def barRight():
+    fontsize = 24
+    return bar.Bar(
+            [
+                widget.Spacer(length=2, background=colors[5]),
+                widget.Image(margin=2, filename = img,scale = True, background=colors[5], mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun")}),
+                widget.Spacer(length=2, background=colors[5]),
+                widget.TextBox(text=" ", fontsize=45+fontsize, padding=-8, foreground=colors[5], background=colors[6]),
+                widget.CurrentLayout(fontsize=fontsize,
+                    foreground=colors[0], background=colors[6],
+                ),
+                widget.TextBox(text=" ", fontsize=45+fontsize, padding=-8, foreground=colors[6], background=colors[5]),
+                grox(fontsize),
+                widget.TextBox(text=" ", fontsize=45+fontsize, padding=-8, foreground=colors[5], background=colors[7]),
+                widget.WindowTabs(fontsize=fontsize, foreground=colors[5]),
+                widget.TextBox(text="\ue0b0", fontsize=45+fontsize, padding=0, foreground=colors[7], background=colors[6]),
+                widget.OpenWeather(fontsize=fontsize, foreground=colors[0], background=colors[6],
+                                   zip=55901, padding=5, metric = False),
+                widget.TextBox(text="\ue0b0", fontsize=45+fontsize, padding=0, foreground=colors[6], background=colors[5]),
+                widget.Mpris2( fontsize=fontsize, background=colors[5],
+                              foreground=colors[0],
+                              name="spotify",
+                              stop_pause_text="Music - Paused", scroll_chars=None,
+                              display_metadata=["xesam:title", "xesam:artist"],
+                              objname="org.mpris.MediaPlayer2.spotify",
+                              ),
+                widget.TextBox(text="\ue0b0", fontsize=45+fontsize, padding=0, foreground=colors[5], background=colors[6]),
+                widget.TextBox(text=" ⏲", foreground=colors[0], background=colors[6], fontsize=18+fontsize),
+                widget.Clock(foreground=colors[0], background=colors[6], format="%Y-%m-%d %a %I:%M %p", fontsize=fontsize),
+                widget.Spacer(length=5, background=colors[6]),
+            ],
+            25+fontsize,
+            background = colors[6],
+            margin=[5, 5, 5, 5], # Space around bar as int or list of ints [N E S W].
+            opacity = 1, # Bar Opacity
+       )
+
+
+
+screens = [
+    #left screen
+    Screen(
+        top=barLeft()
+    ),
+    #screen 2
+    Screen(
+        top=barRight()
+    ),
+]
+
+###
+
+# Drag floating layouts.
+mouse = [
+    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Click([mod], "Button2", lazy.window.bring_to_front()),
+]
+
+floating_layout = layout.Floating(
+    float_rules=[
+        # Run the utility of `xprop` to see the wm class and name of an X client.
+        *layout.Floating.default_float_rules,
+        Match(wm_class="Tk"),  # gitk
+        Match(wm_class="tk"),  # gitk
+    ]
+)
+
+
+
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
@@ -141,12 +315,4 @@ def start_once():
     subprocess.call([home + '/.config/qtile/autostart.sh'])
 
 
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
 wmname = "QTILE"

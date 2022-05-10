@@ -37,6 +37,7 @@ keys = [
     Key([mod], "i", lazy.layout.grow()),
     Key([mod], "m", lazy.layout.shrink()),
     Key([mod], "t", lazy.window.toggle_floating()),
+    Key([mod], "f", lazy.window.toggle_fullscreen()),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
@@ -47,9 +48,9 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    Key([alt, "control"], "Right", lazy.screen.next_group(),
+    Key([alt, "control"], "Right", lazy.screen.next_group(skip_empty=True),
             desc="Switch to next group"),
-    Key([alt, "control"], "Left", lazy.screen.prev_group(),
+    Key([alt, "control"], "Left", lazy.screen.prev_group(skip_empty=True),
             desc="Switch to previous group"),
     Key([mod], "o", lazy.layout.maximize()),
 
@@ -60,12 +61,15 @@ keys = [
     Key([mod, alt], "r", lazy.restart(), desc="restart qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
+    # Change screens
+    Key([mod], "w", lazy.next_screen(), desc="Move to next screen."),
+
     #applications
     Key([mod], "r", lazy.spawn("rofi -show run"), desc="Spawn a command using a prompt widget"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "l", lazy.spawn("xflock4"), desc="Launches XFLOCK4"),
     Key([mod], "b", lazy.spawn("brave"), desc="Launch Brave Browser"),
-    Key([mod], "e", lazy.spawn("emacsclient -c -a emacs"), desc="Launch Emacs"),
+    Key([mod], "e", lazy.spawn("emacsclient -nc -a 'emacs'"), desc="Launch Emacs"),
+    Key([mod], "l", lazy.spawn("betterlockscreen -l dimblur"), desc="Locks Screen"),
     Key([mod], "s", lazy.spawn("steam"), desc="Launch Steam"),
     Key([mod], "p", lazy.spawn("flameshot gui"), desc="Launch Flameshot GUI"),
 
