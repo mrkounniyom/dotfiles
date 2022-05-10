@@ -1,0 +1,53 @@
+#
+# bash aliases
+#
+
+alias ..='cd ..'
+alias home='cd ~'
+alias c='clear'
+alias h='history'
+alias path='echo -e ${PATH//:\\n}'
+alias nf='neofetch'
+alias ls='exa -a'
+alias lsa='exa -lah'
+alias lsg='exa -lagh'
+alias cp='cp -i'
+alias rm='rm -i'
+alias ln='ln -i'
+alias getalias='cat ~/.bashali | grep ^alias | sort'
+alias gogit='cd ~/git'
+alias yupd='yay -Syyu'
+alias grep='grep --color=auto'
+alias vi='vim'
+alias suvi='sudo vim'
+alias em='emacs'
+alias suem='sudo emacs'
+alias mkdir='mkdir -pv'
+alias diff='colordiff'
+alias root='sudo -i'
+alias meminfo='free -m -l -t'
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias cpuinfo='lscpu'
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+alias ht='htop'
+alias dir='dir --color=auto'
+alias randwal='nitrogen --random ~/wallpapers/ --set-scaled'
+alias emreboot='killall emacs; emacs --daemon &'
+alias gitstat='git status'
+alias py='python'
+# ARCH related alias appf="yay -Ss"
+# XMONAD alias xmor="xmonad --recompile; xmonad --restart"
+alias vgamon="xrandr --output VGA1 --mode 1920x1080 --right-of LVDS1; ~/.config/polybar/launch-i3d.sh"
+alias vgaoff="xrandr --output VGA1 --off; ~/.config/polybar/launch-i3.sh"
+#TIMESHIFT needed alias timeshift="sudo timeshift"
+alias nt='alacritty --working-directory . &'
+alias lst='exa --tree'
+alias dsk1='cd /media/mk/1'
+alias mountnas='sudo mount -t cifs -o username=mk //192.168.1.4/Pool1 /mnt/share'
+alias shutdown='sudo shutdown now'
+alias reboot='sudo reboot'
+alias weather='curl wttr.in'
+alias sudo='sudo -E'

@@ -1,0 +1,84 @@
+# ~/.config/starship.toml
+
+
+
+format = """
+[ ](bg:blue)\
+$username\
+[](bg:red fg:blue)\
+$directory\
+[](fg:red bg:yellow)\
+$git_branch\
+$git_status\
+$git_state\
+[](fg:yellow bg:green)\
+$python\
+[](fg:green bg:cyan)\
+$time\
+[](fg:cyan bg:purple)\
+$cmd_duration\
+[ ](fg:purple)\
+"""
+
+
+# Disable the blank line at the start of the prompt
+# add_newline = false
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = true
+style_user = "bg:blue fg:white"
+style_root = "bg:blue fg:#bf616a"
+format = '[ $user ]($style)'
+
+[directory]
+style = "bg:red"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Here is how you can shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
+[directory.substitutions]
+"Documents" = "Doc"
+"Downloads" = "Down"
+"Music" = "Mus"
+"Pictures" = "Pic"
+
+# Keep in mind that the order matters. For example:
+# "Important Documents" = "  "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important  " = "  "
+
+[git_branch]
+symbol = "שׂ"
+style = 'fg:black bg:yellow'
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = 'fg:black bg:yellow'
+format = '[($all_status$ahead_behind) ]($style)'
+
+[git_state]
+style = 'fg:black bg:yellow'
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[time]
+disabled = false
+use_12hr = true
+time_format = "%r" # Hour:Minute Format
+style = "bg:cyan fg:black"
+format = '[ $time ]($style)'
+
+[cmd_duration]
+min_time = 10
+style = "bg:purple fg:white"
+format = "[ took $duration ]($style)"
+
+[python]
+symbol = "\uf716"
+style = "fg:black bg:green"
+pyenv_version_name = true
+format = '[${symbol}${pyenv_prefix}(${version})(($virtualenv))]($style)'
