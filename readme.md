@@ -21,4 +21,3 @@ Typical public dotfiles repo used for GNU/LINUX systems.
 | starship.toml | [starship prompt](https://starship.rs/) a cleaner & highly configurable prompt for various terminals/shells. | 
 
 ## Todo
-+ Update QTILE Configs. 
