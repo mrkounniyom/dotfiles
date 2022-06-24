@@ -1,13 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/sh
+killall picom
+killall pasystray
+killall spotifyd
 
-/usr/bin/emacs --daemon &
-xrandr --auto --output HDMI-A-0 --mode 2560x1440
-xrandr --auto --output DisplayPort-1 --mode 3840x2160 --right-of HDMI-A-0
-nitrogen --head=0 --set-scaled --random ~/wallpapers/
-nitrogen --head=1 --set-scaled --random ~/wallpapers/
-#xfce4-power-manager &
-steam &
-discord &
-picom -bf --experimental-backend &
-xrandr --dpi 140
-xrdb /home/mk/.Xresources
+while pgrep -u $UID -x picom >/dev/null; do sleep 1; done
+
+picom --experimental-backends &
+
+pulseaudio &
+
+pasystray &
+spotifyd &
+
+nitrogen --random ~/wallpapers --set-scaled
+
+dunst &
+nm-applet &
+#nmcli c up Home
+
+emacs --daemon &
+

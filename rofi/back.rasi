@@ -1,11 +1,10 @@
 configuration {
-    modi: "window,run,drun";
+    modi: "window, combi, filebrowser, run";
     width:100;
     lines: 15;
     columns: 1;
     font: "monospace 11";
     terminal: "alacritty";
-    sidebar-mode: true;
 /*	columns: 1;*/
 /*	font: "mono 12";*/
 /*	bw: 1;*/
@@ -147,15 +146,4 @@ configuration {
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
 }
-timeout {
-      action: "kb-cancel";
-      delay:  0;
-}
-filebrowser {
-      directories-first: true;
-      sorting-method:    "name";
-}
-
-//@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
-//@theme "/usr/share/rofi/themes/sidebar.rasi"
-@theme "/home/mk/.config/rofi/themes/side-cust.rasi"
+@import "~/.config/rofi/themes/gotham.rasi"

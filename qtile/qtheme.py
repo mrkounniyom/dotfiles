@@ -1,44 +1,63 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-class theme:
-    Cat = [
-        "#161320", #Black 0
-        "#D9E0EE", #White
-        "#DDB6F2", #Mauve
-        "#302D41", #Black 3
-        "#ABE9B3", #Green
-        "#988BA2", #BG
-        "#96CDFB", #Blue
-        "#DDB6F2", #purple
-    ]
+# Theme Color Dictionaries
+notSure = {
+    'bg':'#1c1e26',
+    'fg':'#e0e0e0',
+    'brd':'#ee64ac',
+    'blue':'#3fc4de',
+    'active':'#3fc4de',
+    'bar': '#6f6a4e'
+}
+nord = {
+    'bg': '#2E3440',
+    'fg': '#D8DEE9',
+    'brd': '#BF616A',
+    'blue': '#5E81AC',
+    'red': '#BF616A',
+    'orange': '#D08770',
+    'active': '#D08770',
+    'bar': '#2E3440'
+}
 
-    Dracula = [
-        "#F8F8F2", #White
-        "#6272a4", #Other
-        "#F28FAD", #Red
-        "#302D41", #Black 3
-        "#50fa7b", #Green
-        "#44475a", #widget BG
-        "#282a36", #Black
-        "#bd93f9", #purple
-    ]
-    Tomorrow = [
-        "#cccccc", #White
-        "#6272a4", #Other
-        "#f2777a", #Red
-        "#302D41", #Blue
-        "#50fa7b", #Green
-        "#515151", #Widget BG
-        "#2d2d2d", #Black
-        "#cc99cc", #purple
-    ]
-    Nord = [
-        "#ECEFF4", #White
-        "#4C566A", #Other
-        "#BF616A", #Red
-        "#5E81AC", #Blue
-        "#8FBCBB", #Green
-        "#2E3440", #Widget BG
-        "#2E3440", #Black
-        "#81A1C1", #purple
-    ]
+# From https://github.com/MarkMichos/1337-Scheme
+i337 = {
+    'bg': '#191919',
+    'fg': '#ffffff',
+    'blue': '#8cdaff',
+    'red': '#ff5e5e',
+    'orange': '#fab85a',
+    'bar': '#3b3a32',
+    'active': '#8cdaff',
+    'brd': '#e5a5e0'
+}
+
+# From https://github.com/challenger-deep-theme/vim
+challenger_deep = {
+    'bg': '#1e1c31',
+    'fg': '#cbe3e7',
+    'black': '#565575',
+    'red': '#ff8080',
+    'green': '#95ffa4',
+    'yellow': '#ffe9aa',
+    'blue': '#8cdaff',
+    'magenta': '#c991e1',
+    'cyan': '#aaffe4',
+    'brd': '#ffe9aa',
+    'active': '#c991e1',
+    'bar': '#3b3a32'
+}
+doom_one = {
+    'bg': '#282c34',
+    'fg': '#bbc2cf',
+    'black': '#1c1f24',
+    'red': '#ff6c6b',
+    'green': '#98be65',
+    'yellow': '#da8548',
+    'blue': '#51afef',
+    'magenta': '#c678dd',
+    'cyan': '#5699af',
+    'brd': '#c678dd',
+    'active': '#528bff',
+    'bar': '#3e4451'
+}
